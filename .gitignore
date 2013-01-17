@@ -1,0 +1,6 @@
+/Settings/*
+/Packages/*/*.cache
+/Packages/User/sftp_servers
+/Backup/*
+
+Packages/Default/Startup.cache

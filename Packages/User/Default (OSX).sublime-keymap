@@ -1,0 +1,4 @@
+[
+    { "keys": ["super+shift+x"], "command": "indentxml" },
+    { "keys": ["super+shift+h"], "command": "goto_documentation" }
+]

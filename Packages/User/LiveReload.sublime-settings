@@ -1,0 +1,7 @@
+{
+  "version" : "2.0"
+  , "apply_js_live" : false
+  , "apply_css_live" : false
+  , "apply_images_live" : false
+  , "compass_css_dir" : false //set to false if you have problems with livereload
+}

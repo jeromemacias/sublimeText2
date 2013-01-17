@@ -1,0 +1,23 @@
+{
+	"auto_upgrade_last_run": null,
+	"installed_packages":
+	[
+		"AdvancedNewFile",
+		"Alignment",
+		"BracketHighlighter",
+		"CTags",
+		"DocBlockr",
+		"EditorConfig",
+		"Git",
+		"Goto Documentation",
+		"Indent XML",
+		"LiveReload",
+		"Markdown Preview",
+		"Package Control",
+		"PHP-Twig",
+		"SFTP",
+		"SideBarEnhancements",
+		"SublimeCodeIntel",
+		"SublimeLinter"
+	]
+}
