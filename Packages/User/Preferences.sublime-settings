@@ -1,5 +1,7 @@
 {
 	"auto_complete": false,
+	"bold_folder_labels": true,
+	"caret_style": "phase",
 	"codeintel_disabled_languages":
 	[
 		"JavaScript"
@@ -10,15 +12,13 @@
 	"find_selected_text": true,
 	"font_size": 12.0,
 	"highlight_line": true,
-	"caret_style": "phase",
-	"line_padding_bottom" : 1,
-	"line_padding_top" : 1,
 	"ignored_packages":
 	[
 		"Vintage"
 	],
+	"line_padding_bottom": 1,
+	"line_padding_top": 1,
 	"sublimelinter": false,
 	"translate_tabs_to_spaces": true,
-	"tree_animation_enabled": false,
-	"bold_folder_labels": true
+	"tree_animation_enabled": false
 }

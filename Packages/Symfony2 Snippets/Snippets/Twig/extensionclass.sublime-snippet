@@ -1,0 +1,33 @@
+<snippet>
+    <content><![CDATA[
+class ${3:Name}Extension extends \Twig_Extension
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function getFilters()
+    {
+        return array();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTests()
+    {
+        return array();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFunctions()
+    {
+        return array();
+    }
+}
+]]></content>
+    <tabTrigger>sftwigextension</tabTrigger>
+    <scope>source.php</scope>
+    <description>Symfony2 / Twig / Extension class</description>
+</snippet>

@@ -1,0 +1,16 @@
+<snippet>
+    <content><![CDATA[
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+class ${1:Default}Controller extends Controller
+{
+    public function ${2:index}Action(${3})
+    {
+        return \$this->render('${4}.html.twig');
+    }
+}
+]]></content>
+    <tabTrigger>sfcontroller</tabTrigger>
+    <scope>source.php</scope>
+    <description>Symfony2 / Controller / Controller class</description>
+</snippet>

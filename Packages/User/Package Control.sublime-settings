@@ -8,16 +8,17 @@
 		"CTags",
 		"DocBlockr",
 		"EditorConfig",
+		"Floobits",
 		"Git",
 		"Goto Documentation",
 		"Indent XML",
-		"LiveReload",
 		"Markdown Preview",
 		"Package Control",
 		"PHP-Twig",
 		"SFTP",
 		"SideBarEnhancements",
 		"SublimeCodeIntel",
-		"SublimeLinter"
+		"SublimeLinter",
+		"Symfony2 Snippets"
 	]
 }

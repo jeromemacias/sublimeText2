@@ -2,5 +2,6 @@
 /Packages/*/*.cache
 /Packages/User/sftp_servers
 /Backup/*
+/Installed Packages/*
 
 Packages/Default/Startup.cache
