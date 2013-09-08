@@ -12,31 +12,32 @@ if int(sublime.version()) > 3000:
     st_version = 3
 
 
-settings = sublime.load_settings('SFTP.sublime-settings')
-
 arch_lib_path = None
 if sublime.platform() == 'linux':
     arch_lib_path = os.path.join(os.path.dirname(__file__), 'lib',
-        'linux_' + sublime.arch())
-    if settings.get('linux_enable_ssl'):
-        print('SFTP: enabling custom linux ssl module')
-        for ssl_ver in ['0.9.8', '1.0.0', '10']:
-            lib_path = os.path.join(arch_lib_path, 'libssl-' + ssl_ver)
-            try:
-                m_info = imp.find_module('_ssl', [lib_path])
-                m = imp.load_module('_ssl', *m_info)
-                print('SFTP: successfully loaded _ssl module for libssl.so.%s' % ssl_ver)
-                break
-            except (ImportError) as e:
-                print('SFTP: _ssl module import error - ' + str(e))
-        if '_ssl' in sys.modules:
-            plat_lib_path = os.path.join(sublime.packages_path(), 'SFTP', 'lib',
-                'linux')
-            try:
+        'st%d_linux_%s' % (st_version, sublime.arch()))
+    print('SFTP: enabling custom linux ssl module')
+    for ssl_ver in ['1.0.0', '10', '0.9.8']:
+        lib_path = os.path.join(arch_lib_path, 'libssl-' + ssl_ver)
+        sys.path.append(lib_path)
+        try:
+            import _ssl
+            print('SFTP: successfully loaded _ssl module for libssl.so.%s' % ssl_ver)
+            break
+        except (ImportError) as e:
+            print('SFTP: _ssl module import error - ' + str(e))
+    if '_ssl' in sys.modules:
+        try:
+            if sys.version_info < (3,):
+                plat_lib_path = os.path.join(sublime.packages_path(), 'SFTP',
+                    'lib', 'st2_linux')
                 m_info = imp.find_module('ssl', [plat_lib_path])
                 m = imp.load_module('ssl', *m_info)
-            except (ImportError) as e:
-                print('SFTP: ssl module import error - ' + str(e))
+            else:
+                import ssl
+        except (ImportError) as e:
+            print('SFTP: ssl module import error - ' + str(e))
+
 
 reloading = {
     'happening': False,
@@ -91,6 +92,7 @@ for mod in mods_load_order:
     if mod_load_prefix + mod in reload_mods:
         reload(sys.modules[mod_load_prefix + mod])
 
+
 need_package_control_upgrade = False
 try:
     from sftp.commands import (SftpShowPanelCommand, SftpCreateServerCommand,
@@ -113,8 +115,6 @@ try:
     from sftp import times as sftp_times
 except (ImportError):
     try:
-        if arch_lib_path:
-            sys.path.append(arch_lib_path)
         from .sftp.commands import (SftpShowPanelCommand, SftpCreateServerCommand,
             SftpBrowseServerCommand, SftpLastServerCommand, SftpEditServerCommand,
             SftpDeleteServerCommand, SftpBrowseCommand, SftpUploadFileCommand,
@@ -149,16 +149,33 @@ def plugin_loaded():
             u'the "Packages/Package Control/" folder and then follow the ' + \
             u'instructions at https://sublime.wbond.net/installation to ' + \
             u'properly upgrade Package Control.')
+        return
+
+    settings = sublime.load_settings('SFTP.sublime-settings')
+
+    try:
+        # This won't be defined if the wrong version is installed
+        sftp_debug.set_debug(settings.get('debug', False))
+    except (NameError):
+        pass
+
+    bin_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'bin')
+    has_bin = os.path.exists(bin_folder)
+    psftp_exe = os.path.join(bin_folder, 'psftp.exe')
+    has_psftp = os.path.exists(psftp_exe)
+    if os.name == 'nt' and (not has_bin or not has_psftp):
+        sublime.error_message(u'SFTP\n\nThe SFTP package seems to have been ' + \
+            u'synced or copied from an OS X or Linux machine. The Windows ' + \
+            u'version of the package is different due to the inclusion of ' + \
+            u'a number of necessary exe files.\n\nTo fix the SFTP package ' + \
+            u'so that it may run properly, please run "Remove Package" and ' + \
+            u'then reinstall it using the "Install Package" command.\n\nTo ' + \
+            u'learn how to properly sync packages across different machines, ' + \
+            u'please visit https://sublime.wbond.net/docs/syncing')
+
 
 if sys.version_info < (3,):
     plugin_loaded()
-
-
-try:
-    # This won't be defined if the wrong version is installed
-    sftp_debug.set_debug(settings.get('debug', False))
-except (NameError):
-    pass
 
 
 hook_match = re.search("<class '(\w+).ExcepthookChain'>", str(sys.excepthook))
